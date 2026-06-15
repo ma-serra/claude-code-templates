@@ -90,6 +90,9 @@ const messages = await parseChat(txtContent);
 // Extract from ZIP
 const zip = await JSZip.loadAsync(file);
 const chatFile = zip.file(/.*\.txt$/)[0];
+if (!chatFile) {
+  throw new Error('No .txt chat file found in the ZIP archive.');
+}
 const chatContent = await chatFile.async('string');
 ```
 
@@ -106,8 +109,8 @@ Use template literals with the `styled` API. Keep styles co-located with compone
 ```typescript
 import styled from 'styled-components';
 
-const MessageBubble = styled.div<{ isOwn: boolean }>`
-  background: ${({ isOwn }) => isOwn ? '#dcf8c6' : '#fff'};
+const MessageBubble = styled.div<{ $isOwn: boolean }>`
+  background: ${({ $isOwn }) => $isOwn ? '#dcf8c6' : '#fff'};
   border-radius: 8px;
   padding: 8px 12px;
 `;

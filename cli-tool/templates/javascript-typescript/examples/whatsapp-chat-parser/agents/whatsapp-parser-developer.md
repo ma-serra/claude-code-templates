@@ -88,6 +88,9 @@ async function extractZip(file: File) {
   
   // Find chat log
   const txtFiles = zip.filter((_, f) => f.name.endsWith('.txt'));
+  if (txtFiles.length === 0) {
+    throw new Error('No .txt chat file found in the ZIP archive.');
+  }
   const chatContent = await txtFiles[0].async('string');
   
   // Collect media as object URLs
